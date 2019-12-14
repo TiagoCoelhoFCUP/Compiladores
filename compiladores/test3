@@ -1,0 +1,13 @@
+func main(){
+ int x = 1;
+ int y = 1;
+ while(x<=20){
+  if(x%2==0){
+   printf("%d",x);
+  }
+  else{
+   printf("%d",y);
+  }
+  x = x + 1;
+ }
+}
