@@ -50,7 +50,7 @@ for time in range(len(offsets)):
 		for t_j in range(t_i +1,len(offsets[0])):
 			coord_i , coord_j = offsets[time][t_i] , offsets[time][t_j]
 			if coord_i.all()  != 0 and coord_j.all() != 0:
-				sql_d = """select st_distance(ST_GeomFromText('POINT(""" + str(coord_i[0])+ " " + str(coord_i[1]) + """)',4326),ST_GeomFromText('POINT(""" + str(coord_j[0])+ " " + str(coord_j[1]) + """)',4326));"""
+				sql_d = """select st_distance(ST_GeomFromText('POINT(""" + str(coord_i[0])+ " " + str(coord_i[1]) + """)',3763),ST_GeomFromText('POINT(""" + str(coord_j[0])+ " " + str(coord_j[1]) + """)',3763));"""
 				cursor_psql.execute(sql_d)
 				results_d = cursor_psql.fetchall()
 				distance = int(results_d[0][0])
