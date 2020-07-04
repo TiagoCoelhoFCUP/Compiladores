@@ -7,6 +7,7 @@ import datetime
 import csv
 from postgis import Polygon,MultiPolygon
 from postgis.psycopg import register
+import matplotlib.gridspec as gridspec
 
 og_border = [-120000, 165000, -310000, 285000]
 curr_border = [-120000, 165000, -310000, 285000]
@@ -31,8 +32,8 @@ def get_new_border(i):
 
 	new_border = [x_min,x_max,y_min,y_max]
 
-	periodo = 400
-	t = 100
+	periodo = 500
+	t = 150
 	quant = [abs((-120000 - x_min)/t),abs((165000 - x_max)/t),abs((-310000 - y_min)/t),abs((285000 - y_max)/t)]
 
 	x_min,x_max,y_min,y_max = curr_border[0], curr_border[1], curr_border[2], curr_border[3]
@@ -261,7 +262,17 @@ xs_min, xs_max, ys_min, ys_max = -120000, 165000, -310000, 285000
 width_in_inches = (xs_max-xs_min)/0.0254*1.1
 height_in_inches = (ys_max-ys_min)/0.0254*1.1
 
-fig, ax = plt.subplots(figsize=(width_in_inches*scale, height_in_inches*scale))
+# Create 2x2 sub plots
+gs = gridspec.GridSpec(2, 2)
+
+fig = plt.figure(figsize=(width_in_inches*2*scale , height_in_inches*scale))
+
+ax = fig.add_subplot(gs[:, 0]) # span all rows, col 0
+
+ax2 = fig.add_subplot(gs[0, 1]) # row 0, col 1
+
+ax3 = fig.add_subplot(gs[1, 1]) # row 1, col 1
+
 ax.axis('off')
 ax.set(xlim=(xs_min, xs_max), ylim=(ys_min, ys_max))
 
@@ -303,7 +314,6 @@ for state in states[0]:
 		color_array.append((0.20,0.66,0.28))
 
 scat = ax.scatter(x,y,s=2,color=color_array)
-
 
 anim = FuncAnimation(
 	fig, animate, interval=10, frames=len(offsets)-1, repeat = False)
